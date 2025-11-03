@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Lab Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .unit {
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .unit-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .unit-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+        }
+
+        .unit-header h2 {
+            font-size: 1.5em;
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+            font-size: 1.2em;
+        }
+
+        .arrow.open {
+            transform: rotate(90deg);
+        }
+
+        .unit-content {
+            display: none;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .unit-content.show {
+            display: block;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .question-header {
+            background: #f0f0f0;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .question-header:hover {
+            background: #e0e0e0;
+        }
+
+        .question-header h3 {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .question-content {
+            display: none;
+        }
+
+        .question-content.show {
+            display: block;
+        }
+
+        .section {
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .section-header {
+            background: #fafafa;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .section-header:hover {
+            background: #f0f0f0;
+        }
+
+        .section-header h4 {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .section-content {
+            display: none;
+            padding: 15px;
+            background: white;
+        }
+
+        .section-content.show {
+            display: block;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .notes {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .small-arrow {
+            font-size: 0.8em;
+            transition: transform 0.3s;
+        }
+
+        .small-arrow.open {
+            transform: rotate(90deg);
+        }
+.code-block {
+    position: relative;
+    padding-top: 25px;
+
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background 0.3s;
+    top: 5px;
+
+}
+
+.copy-btn:hover {
+    background-color: #5568d3;
+}
+
+.footer {
+  margin-top: 40px;
+  padding: 20px;
+  background: #f0f0f0;
+  border-top: 2px solid #ddd;
+  border-radius: 0 0 15px 15px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #444;
+}
+
+.footer a {
+  color: #667eea;
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.contact {
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+}
+
+.contact-header {
+  background: #fafafa;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s;
+}
+.contact-header:hover { background: #f0f0f0; }
+
+.contact-content {
+  display: none;
+  padding: 15px;
+  background: white;
+}
+.contact-content.show { display: block; }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>C Programming Lab Notes</h1>
+            <p>Complete collection of lab assignments with solutions and notes</p>
+        </div>
+        
+        <div class="content">
+
+            <div class="unit">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <h2>Unit 2.1 - Arithmetic Operations</h2>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="unit-content">
+                    
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>2.1.1 Arithmetic Operations</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program to perform arithmetic operations like +, -, *, /, and % on two input variables num1 and num2.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The first line of input is an integer representing the value for the first number, num1.</p>
+                                    <p>The second line of input is an integer representing the value of the second number, num2.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>The program prints the integers that represent the results of addition, subtraction, multiplication, division, and modulus, each on a new line.</p>
+                                    <p><strong>Note:</strong></p>
+                                    <p>Assuming that the value of num2 is always greater than 0.</p>
+                                    <p>Add a new line character (\n) at the end of the output</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                               <div class="section-content">
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+  int a;
+  int b;
+  scanf("%d%d",&a,&b);
+  printf("%d\n%d\n%d\n%d\n%d\n",a+b,a-b,a*b,a/b,a%b);
+  return 0;
+}</code></pre>
+                                </div></div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. Don't forget \n. 2. Count the numbers of %d correctly.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>2.1.2 Program to find the quotient and remainder</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a program to find the quotient and remainder when dividing an amount given by a user by a specified bill amount.</p>
+                                    <p><strong>Constraint:</strong></p>
+                                    <p>5 &le; amount_given&le; 2500</p>
+                                    <p>5 &le; bill_amount &le; 2500</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The first line of input should be an integer representing the amount given.</p>
+                                    <p>The second line of input should be an integer representing the bill amount.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>The first line of the output represents the quotient in integer format</p>
+                                    <p>The second line of the output represents the remainder in integer format</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+       <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>                             <pre><code>#include &lt;stdio.h&gt;
+int main(){
+  int a;
+  int b;
+  scanf("%d",&a);
+  scanf("%d",&b);
+  printf("%d\n",a/b);
+  printf("%d\n",a%b);
+  return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1 \n must be inside " " also it is '\ 'not '/'.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>2.1.3 Evaluate the expressions</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program to evaluate the following expressions.</p>
+                                    <p>a. A+B*C+(D*E) + F*G</p>
+                                    <p>b. A/B*C-B+A*D/3</p>
+                                    <p>c. A++ + ++B - --A</p>
+                                    <p>d. (i++) + (++i)</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The first line contains the values for the variables A, B, C, D, E, F, G, i, each separated by space respectively.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>The evaluated value of each expression given in the question in a line.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>                                    <pre><code>#include &lt;stdio.h&gt;
+int main(){
+  int a,b,c,d,e,f,g,i;
+  scanf("%d%d%d%d%d%d%d%d",&a,&b,&c,&d,&e,&f,&g,&i);
+  // printf("%d%d%d%d%d%d%d",a,b,c,d,e,f,g);
+  printf("%d\n",a+b*c+(d*e)+f*g);
+  printf("%d\n",a/b*c-b+a*d/3);
+  int temp1=a++;
+  int temp2=++b;
+  int temp3=--a;
+  
+  printf("%d\n",temp1+temp2-temp3);
+  temp1=i++;
+  temp2=++i;
+  printf("%d\n",temp1+temp2);
+  return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. Use correct number of %d while declaration and also in expression. 2. Operations like I++, or ++b cannot be directly printed, like a+b. They must be stored in a variable like temp1.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   <div class="question"> <div class="question-header" onclick="toggleQuestion(this)"> <h3>2.1.4 Demonstration of Bitwise operators</h3> <span class="small-arrow">▶</span> </div> <div class="question-content"> <div class="section"> <div class="section-header" onclick="toggleSection(this)"> <h4>📋 Question</h4> <span class="small-arrow">▶</span> </div> <div class="section-content"> <p>Write a program in C to demonstrate the use of bitwise operators, including left shift, right shift, AND, OR, XOR, and NOT. The program should take two integers as input and print the results of each bitwise operation.</p> <p><strong>Input Format:</strong></p> <p>Input is a single line containing two integers, and separated by a space.</p> <p><strong>Output Format:</strong></p> <p>Print the result of the following operations, each on a new line: Left shift of a, Right shift of a, Bitwise AND of a and B, Bitwise OR of a and B, Bitwise XOR of a and B, Bitwise NOT of a</p> </div> </div> <div class="section"> <div class="section-header" onclick="toggleSection(this)"> <h4>💻 Answer Code</h4> <span class="small-arrow">▶</span> </div> <div class="section-content"> 
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+<pre><code>#include &lt;stdio.h&gt; 
+int main () 
+{ int a,b ; 
+scanf("%d%d",&a,&b); 
+printf ( "%d\n", a &lt;&lt; 1); 
+printf ( "%d\n", a &gt;&gt; 1); printf ( "%d\n", a & b); 
+printf ( "%d\n", a | b); 
+printf ( "%d\n", a ^ b); 
+printf ( "%d\n", ~a); 
+return 0; }</code></pre></div>
+</div>
+</div>
+<div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+        <h4>📝 Notes</h4>
+        <span class="small-arrow">▶</span>
+    </div>
+    <div class="section-content">
+        <div class="notes"> 1. Symbols for each bitwise operators to be noted correctly: & (not &&- that's logical operator), XOR has ^, Bitwise Not has symbol ~ different than ! for not. 2.Bitwise left shift and right shift. Each number can be represented in binary. It's expressed as 1 or 0 &times; 2&sup{n}&sup; where n &gt; 0 upto muchever necessary. So - 0 = 2&sup{0}&sup;&times;0 = 0, 1 = 2&sup{0}&sup;= 1, 2=1&times; 2&sup{1}&sup; + 0&times; 2&sup{0}&sup; = 10 And likewise, 3 = 11, 4 = 100, 7 = 111(2&sup{2}&sup;+2&sup{1}&sup;+2&sup{0}&sup;), 8=1000 and so on. Now, 1 = 00000001 you can add as many zeros to left. So in bitwise left shift: All the binary digits shift to left by specified amount, empty spaces filled with zeros. This is equivalent of multiplying number by 2&sup{n}&sup;. Example: Consider 5 (0001001). If we bit shift left by 1 digit, it becomes 0010010 = 5&times;2= 10.(0+2+0+0+8) Similiarity by 2 digits, it becomes 0100100 = 20. (0+0+4+0+0+16). Syntax: Result = operand &lt;&lt; n, where n is number of shifting, it can be set empty for 1. So int a = 5; b = a &lt;&lt; 2; printf("%d",b) Output: 20. (10100). Right shift is opposite, all binary digits shift to right, empty spaces filled with zeroes, equivalent of dividing number by 2&sup{n}&sup;. Though this is different for say signed, unsigned bits, the general idea is same. Syntax same just use &gt;&gt;. </div>
+    </div>
+</div>
+</div> 
+</div> 
+</div> 
+</div>
+            
+            <div class="unit">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <h2>Unit 2.2 - Logical and Relational Operators</h2>
+                    
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="unit-content">
+                    
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>2.2.1 Logical Operators</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that demonstrates the use of logical operators (&&, ||, !) with dynamic input.</p>
+                                    <p>Prompt the user to enter two integer values and then use logical operators to determine the following:</p>
+                                    <p>If both numbers are positive or not.</p>
+                                    <p>If at least one number is equal to 5 or not.</p>
+                                    <p>If the first number is not greater than 10 or not.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The program prompts the user to enter two integers, let's say num1 and num2 in a single line separated by space.</p>
+                                    <p><strong>Output format:</strong></p>
+                                    <p>The program prints whether both numbers are positive:</p>
+                                    <p>"Positive" if both are greater than 0.</p>
+                                    <p>"Not positive" if either is less than or equal to 0.</p>
+                                    <p>If either num1 or num2 is equal to 5:</p>
+                                    <p>Output: "{num1} or {num2} = 5" (e.g., "5 or 3 = 5")</p>
+                                    <p>If neither number is equal to 5:</p>
+                                    <p>Output: "{num1},{num2) != 5" (e.g., "4,3 != 5")</p>
+                                    <p>Whether the first number is less than or equal to 10:</p>
+                                    <p>If num1 is less than or equal to 10: "{num1} &lt;= 10"</p>
+                                    <p>If num1 is greater than 10: "{num1} &gt; 10"</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+        <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>                            <pre><code>#include &lt;stdio.h&gt; 
+int main ()
+{
+  int num1,num2 ;
+  scanf("%d%d",&num1,&num2);
+  (num1 &gt; 0 &amp;&amp; num2&gt;0)? printf("Positive\n") : printf("Not positive\n");
+  
+  (num1==5 || num2==5)? printf("%d or %d = 5\n", num1, num2):printf("%d,%d != 5\n", num1, num2); 
+  
+  (num1&lt;=10)? printf("%d &lt;= 10\n",num1): printf("%d &gt; 10\n",num1);
+  
+  return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. Not equal to is != Not=! 2. If else can be used instead of ternary ()?:; but it feels more complicated, unnecessary.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>2.2.2 Relational Operators</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that demonstrates the use of relational operators ( &lt;, &le;, &gt;, &ge;, ==, != ). Prompt the user to enter two integer values and then use relational operators to compare the numbers and print the results.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The program prompts the user to enter two integers separated by spaces.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>The program prints "True" or "False" for various comparison operations between the two integers, with each result on a new line.</p>
+                                    <p><strong>Note:</strong> Refer to the displayed test cases for better understanding of output format.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt; 
+int main ()
+{
+  int a,b;
+  printf("Enter two numbers: ");
+  scanf("%d%d",&a,&b);
+  (a&lt;b)?printf("%d &lt; %d: True\n",a,b):printf("%d &lt; %d: False\n",a,b);
+
+  (a&lt;=b)?printf("%d &lt;= %d: True\n",a,b):printf("%d &lt;= %d: False\n",a,b);
+
+  (a&gt;b)?printf("%d &gt; %d: True\n",a,b):printf("%d &gt; %d: False\n",a,b);
+
+  (a&gt;=b)?printf("%d &gt;= %d: True\n",a,b):printf("%d &gt;= %d: False\n",a,b);
+
+  (a==b)?printf("%d == %d: True\n",a,b):printf("%d == %d: False\n",a,b);
+
+  (a!=b)?printf("%d != %d: True\n",a,b):printf("%d != %d: False\n",a,b);
+
+  return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. Use == logical operator not =. 2. If else can be used instead of ternary.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="unit">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <h2>Unit 3.1 - Control Structures and Loops</h2>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="unit-content">
+                    
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.1 Grade calculator</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>You are designing a grade calculator for a school. Write a C program that takes a student's score as input and calculates their grade based on the following criteria:</p>
+                                    <p>If the score is 90 or above, assign the grade 'A'</p>
+                                    <p>If the score is between 80 and 89, assign the grade 'B'</p>
+                                    <p>If the score is between 70 and 79, assign the grade 'C'</p>
+                                    <p>If the score is below 70, assign the grade 'F'</p>
+                                    <p><strong>Input layout:</strong></p>
+                                    <p>The only line of input is the score.</p>
+                                    <p><strong>Output layout:</strong></p>
+                                    <p>Print grade as mentioned in the problem statement.</p>
+                                    <p><strong>Constraint:</strong></p>
+                                    <p>Score entered is a positive integer &ge; 0</p>
+                                    <p><strong>Instruction:</strong> Strictly follow the input and output layout mentioned in the visible sample test cases.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main(){
+  int a;
+  scanf("%d",&a);
+  (a&gt;=90)? printf("A"):0;
+  (79&lt;a &amp;&amp; a&lt;90)? printf("B"):0;
+  (69&lt;a &amp;&amp; a&lt;80)? printf("C"):0;
+  (a&lt;70)? printf("F"):0;
+  (a&gt;100 &amp;&amp; a&lt;0)? printf("Enter Valid Score from 0 to 100"): 0;
+  return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes"> 1. It's little ambiguous which grade to assign for edge cases, like 80,70. 2. No test cases has negative numbers, in real codes error fallback might be needed. 
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.2. Display First N Numbers using While Loop</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a program in C to display the first N numbers starting from 1 using the "while" loop.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The input is the positive integer N.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>Print the first N numbers from 1 to N in a single line separated by spaces.</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>
+#include &lt;stdio.h&gt;
+
+int main() {
+	int i = 1;
+	int n;
+	scanf("%d",&n);
+
+	while (i&lt;n) {
+		printf("%d ",i);
+		i = i+1;
+	}
+	printf("%d",n);
+
+	return 0;
+}</code></pre>
+</div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. The expected output wanted space after each number but not after last N. So they wanted 1&bull;2&bull;3&bull;4&bull;5 not 1&bull;2&bull;3&bull;4&bull;5&bull;. Hence, only 1&bull;2&bull;3&bull;4&bull; was done through loop, and 5 (not 5&bull;) printed outside.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question"> <!-- FIX: Added missing <div class="question"> tag for 3.1.3 -->
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.3. Display First N Numbers using Do while loop</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a program in C to display the first N numbers starting from 1 using a "do-while" loop.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The input is the positive integer N.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>Print the first N numbers from 1 to N in a single line separated by spaces.</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+
+ int i = 1;
+	int n;
+	scanf("%d",&n);
+
+
+	do {
+
+		// Write your code here...
+		printf("%d ",i);
+		i = i+1;
+
+
+	} while ( i&lt;n);
+	 printf("%d",n);
+	return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. The expected output wanted space after each number but not after last N. So they wanted 1&bull;2&bull;3&bull;4&bull;5 not 1&bull;2&bull;3&bull;4&bull;5&bull;. Hence, only 1&bull;2&bull;3&bull;4&bull; was done through loop, and 5 (not 5&bull;) printed outside.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.4 .Display First N Numbers using For loop</h3> <!-- FIX: Corrected typo in the heading: "For while loop" to "For loop" -->
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a program in C to display the first N numbers starting from 1 using a "for" loop.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The input is the positive integer N.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>Print the first N numbers from 1 to N in a single line separated by spaces.</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+	int i = 1;
+	int n;
+	scanf("%d",&n);
+	for (;i&lt;n;i++) {
+
+		printf("%d ",i);
+		//i = i+1;
+	}
+	printf("%d",n);
+	return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. The expected output wanted space after each number but not after last N. So they wanted 1&bull;2&bull;3&bull;4&bull;5 not 1&bull;2&bull;3&bull;4&bull;5&bull;. Hence, only 1&bull;2&bull;3&bull;4&bull; was done through loop, and 5 (not 5&bull;) printed outside. 2. For loop needs three conditions inside it , and two semicolons. First one can be left blank, next two can't be. (Mostly).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.5. Print all natural numbers in reverse (from n to 1)</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that takes an integer n as input and prints all natural numbers in reverse order, starting from n down to 1, using a while loop.</p>
+                                    <p><strong>Input:</strong></p>
+                                    <p>The program should prompt the user for input in the following format: "n: "&lt;value&gt;", where &lt;value&gt; is a positive integer</p>
+                                    <p><strong>Output:</strong></p>
+                                    <p>The program should print the numbers in reverse order from n to 1 in a single line, separated by a space.</p>
+                                    <p><strong>Example:</strong></p>
+                                    <p>Input: n: 10</p>
+                                    <p>Output: 10 9 8 7 6 5 4 3 2 1</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+
+int main() {
+	int n;
+	printf("n: ");
+	scanf("%d",&n);
+
+	while( n&gt;0 ){
+	printf("%d ",n);
+ 	n = n - 1 ;
+
+	}
+
+
+	return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. n= n-1 can be replaced by n-- or --n or n-=1 but this is the most straightforward.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.6 Print all natural numbers in reverse (from n to 1) using do while loop</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that takes an integer n as input and prints all natural numbers in reverse order, starting from n down to 1.</p>
+                                    <p><strong>Input:</strong></p>
+                                    <p>The program should prompt the user for input in the following format: "n: "&lt;value&gt;", where &lt;value&gt; is a positive integer</p>
+                                    <p><strong>Output:</strong></p>
+                                    <p>The program should print the numbers in reverse order from n to 1 in a single line, separated by a space.</p>
+                                    <p><strong>Example:</strong></p>
+                                    <p>Input: n: 10</p>
+                                    <p>Output: 10 9 8 7 6 5 4 3 2 1</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+
+	int n;
+	printf("n: ");
+	scanf("%d",&n);
+
+	do {
+
+	printf("%d ",n);
+ 	n=n-1 ;
+
+	} while (n&gt;0);
+
+	return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. n= n-1 can be replaced by n-- or --n or n-=1 but this is the most straightforward.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.7.Print all natural numbers in reverse (from n to 1) using for loop</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that takes an integer n as input and prints all natural numbers in reverse order, starting from n down to 1. The program should use a for loop to achieve this.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The program should prompt the user for input in the following format: "n:&lt;value&gt;"; where &lt;value&gt; is a positive integer.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>The program should print the numbers in reverse order from n to 1 in a single line, separated by a space.</p>
+                                    <p><strong>Example:</strong></p>
+                                    <p>Input: n: 10</p>
+                                    <p>Output: 10 9 8 7 6 5 4 3 2 1</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+
+	int n;
+	printf("n: ");
+	scanf("%d",&n);
+
+	for(;n&gt;0;n--){
+	printf("%d ",n);
+	}
+
+	return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. n= n-1 can be replaced by n-- or --n or n-=1 but this is the most straightforward.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.8. Print the Following Pattern</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a program to print the following pattern.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The first line of input contains a positive integer representing the number of rows.</p>
+                                    <p>The second line contains another positive integer representing the number of stars.</p>
+                                    <p><strong>Sample Test Case:</strong></p>
+                                    <p>Input:</p>
+                                    <pre>4
+6</pre>
+                                    <p>Output:</p>
+                                    <pre>******
+* *
+* *
+******</pre>
+                                    <p>For more clarity, refer to the visible test cases.</p>
+                                    <p><strong>Instructions:</strong> To run your custom test cases, strictly map your input and output layout with the visible test cases.</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+
+int main() {
+    int row,col;
+    scanf("%d%d",&row,&col);
+    // Write C code here
+    for (int i=1;i&lt;=row;++i){
+        for (int j=1;j&lt;=col;++j){
+        (i==1 | i== row | j ==1 | j== col)?printf("*"):printf(" ");} printf("\n");
+    }
+      return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. The logic i developed is - two loops, first one determines number of rows. So we're essentially doing printf("\n"); adding new line after each row. Second loop inside of this determines columns. So imagine yourself as interpreter: you check is i&lt;n ? For first row say it is, you exceute loop inside of it that is for columns. This loop prints n number of stars. Now it goes out prints \n new line and then repeats.
+                                        2. First think of printing i&times;j grid together. Next, find some condition wherever are empty spaces , or wherever are stars. Like here, only in first row, or first column or last row or last column that's where to print *. So we can write: (i==1 | i== row | j ==1 | j== col). Now if this is true print * else print space. Note to put all this logic correctly inside loops.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question"> <!-- FIX: Missing starting <div class="question"> tag for 3.1.9 -->
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.9. Pattern of Stars</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a program to print a pattern of *(stars) separated by spaces for the given number of rows</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>A single line of input that contains a positive integer representing the number of rows.</p>
+                                    <p><strong>Sample Input:</strong></p>
+                                    <pre>5</pre>
+                                    <p><strong>Output:</strong></p>
+                                    <pre>        *
+      **
+    ***
+  ****
+*****
+  ****
+    ***
+      **
+        *</pre> <!-- FIX: Removed the extra spaces from the start of each line in the pre tag for correct display -->
+                                    <p>For more clarity, refer to the visible test cases.</p>
+                                    <p><strong>Instructions:</strong> To run your custom test cases, strictly map your input and output layout with the visible test cases.</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+             <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>                       <pre><code>#include &lt;stdio.h&gt;
+
+int main(){
+
+int a;
+scanf("%d",&a);
+for (int i=1;i&lt;=a;i++){
+    for(int j=1;j&lt;=a+1;j++){
+        (i+j&lt;=a+1)?printf(" "): printf("*");
+
+    }
+    printf("\n");
+
+}
+for (int i=a-1;i&gt;0;i--){
+    for(int j=1;j&lt;=a+1;j++){
+        (i+j&gt;a+1)?printf("*"): printf(" ");
+
+    }
+    printf("\n");
+}
+}</code></pre></div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. I broke pattern in two - first increasing number of stars from 1 to n. Then decreasing from n-1 to 1. So, imagine a first grid of 5&times;5. In any grid, the above diagonal, the sum, i+j &gt; some amt, while below it's less than that. Using this, we print the ones below diagonal * and rest with spaces. Diagonal elements can be included or discarded by using &gt; or &ge; appropriately.
+                                        2. For second, if you assigned rows columns normally diagonal and sum i+j doesn't work. So we flip notation of j columns going from n to 1 instead of usual 1 to n.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- FIX: Added missing closing </div> for question 3.1.9 -->
+
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.1.10. Determine the Type of Triangle</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that takes the lengths of the three sides of a triangle as input and determines the type of triangle formed by those sides.</p>
+                                    <p>1. A triangle is said Equilateral Triangle if all its sides are equal. If a, b, and c are three sides of the triangle. Then, the triangle is equilateral only if a == b == c.</p>
+                                    <p>2. A triangle is said Isosceles Triangle if its two sides are equal. If a, b, and c are three sides of the triangle. Then, the triangle is isosceles if either a==b or a==c or b==c.</p>
+                                    <p>3. A triangle is said to be a Scalene Triangle if none of its sides are equal.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>The program should prompt the user for input in the following format: Where a, b, and c are the lengths of the sides of the triangle (floating-point numbers), each in a new line.</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>Based on the type of output, the program should display the following:</p>
+                                    <p>"Equilateral Triangle" if it is an Equilateral Triangle</p>
+                                    <p>"Isosceles Triangle" if it is an Isosceles Triangle</p>
+                                    <p>"Scalene Triangle" if it is a Scalene Triangle</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    float a,b,c;
+    scanf("%f%f%f",&a,&b,&c);
+    (a==b &amp;&amp; b==c)?printf("Equilateral Triangle"):0;
+
+    ((a!=b &amp;&amp; b==c)|(a==b &amp;&amp; b!=c)|(a==c &amp;&amp; b!=c))?printf("Isosceles Triangle"):0;
+
+    (a!=b &amp;&amp; b!=c &amp;&amp; a!=c)?printf("Scalene Triangle"):0;
+
+    return 0;
+}</code></pre></div> 
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. Include all conditions properly. We generally forget to include some conditions, line say a==c and b!=c.
+                                        2. Nested if else can be used, but I find it confusing and even then number of conditions are still same, albeit lil more.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- FIX: Added missing closing </div> for question 3.1.10 -->
+                    
+                </div> <!-- Correctly closes unit-content for Unit 3.1 -->
+            </div> <!-- Correctly closes unit for Unit 3.1 -->
+
+            <div class="unit">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <h2>Unit 3.2 - Control Structure Assignment</h2>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="unit-content">
+                    
+                    <div class="question">
+                        <div class="question-header" onclick="toggleQuestion(this)">
+                            <h3>3.2.1 Grocery Bill Calculation with Discounts</h3>
+                            <span class="small-arrow">▶</span>
+                        </div>
+                        <div class="question-content">
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📋 Question</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <p>Write a C program that calculates the final amount a customer has to pay for groceries after applying a discount based on the type of customer.</p>
+                                    <p>The program should first read the total grocery purchase amount (a floating-point number), then prompt the user to enter the customer type.</p>
+                                    <p>If the customer is new (customer_type = 1), a 5% discount is applied.</p>
+                                    <p>If the customer is regular (customer_type = 2), a 10% discount is applied.</p>
+                                    <p>If the customer_type entered is not 1 or 2, print "Invalid" and exit the program.</p>
+                                    <p><strong>Input Format:</strong></p>
+                                    <p>First line: A float representing the total amount of grocery purchase</p>
+                                    <p>Second line: Printed prompt "1 or 2: ", followed by an integer representing the customer_type</p>
+                                    <p><strong>Output Format:</strong></p>
+                                    <p>The program should display the final amount after applying the discount formatted to two decimals, if the entered input is other than 1 or 2 print "Invalid".</p>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>💻 Answer Code</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+<div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Code</button>
+                                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int choice;
+    float amt;
+
+    scanf("%f",&amt);
+    printf("1 or 2: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printf("%.2f\n", 0.95 * amt);
+            break;
+        case 2:
+            printf("%.2f\n",0.9 * amt);
+            break;
+        default:
+            printf("Invalid\n");
+            break;
+    }
+
+    return 0;
+}</code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <h4>📝 Notes</h4>
+                                    <span class="small-arrow">▶</span>
+                                </div>
+                                <div class="section-content">
+                                    <div class="notes">
+                                        1. Be careful about using %f, and no spaces in output. Avoid typos of any kind. 2. You can define limit of number of decimal places in float by adding number before %f like "%.2f" converts 18.0000 to 18.00. only 2 digits after decimal point 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+     </div>
+            </div>
+
+        </div>
+    </div>               
+
+<!-- ================= FOOTER SECTION ================= -->
+<footer class="footer">
+  <p>© 2025 Omkar Deshmukh. Licensed under 
+     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons BY-NC-SA 4.0</a>.
+     Educational use permitted — redistribution allowed with attribution.
+  </p>
+
+  <div class="contact">
+    <div class="contact-header" onclick="toggleContact(this)">
+      <h4>📬 Contact for Queries / Reports / Suggestions</h4>
+      <span class="small-arrow">▶</span>
+    </div>
+    <div class="contact-content">
+      <p><strong>Omkar Deshmukh</strong>, FY B.Tech IT, MIT-AOE</p>
+      <p>
+        Mail: <a href="mailto:202501080094@mitaoe.ac.in">202501080094@mitaoe.ac.in</a><br>
+        Instagram: <a href="https://www.instagram.com/onkardeshmukh68" target="_blank">@onkardeshmukh68</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    <script>
+        function toggleUnit(element) {
+            const content = element.nextElementSibling;
+            const arrow = element.querySelector('.arrow');
+            content.classList.toggle('show');
+            arrow.classList.toggle('open');
+        }
+
+        function toggleQuestion(element) {
+            const content = element.nextElementSibling;
+            const arrow = element.querySelector('.small-arrow');
+            content.classList.toggle('show');
+            arrow.classList.toggle('open');
+        }
+
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const arrow = element.querySelector('.small-arrow');
+            content.classList.toggle('show');
+            arrow.classList.toggle('open');
+        }
+
+function toggleContact(element) {
+  const content = element.nextElementSibling;
+  const arrow = element.querySelector('.small-arrow');
+  content.classList.toggle('show');
+  arrow.classList.toggle('open');
+}
+function copyCode(button) {
+    const code = button.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+        button.textContent = "✅ Copied!";
+        setTimeout(() => button.textContent = "📋 Copy Code", 2000);
+    });
+}
+    </script>
+</body>
+</html>
+
